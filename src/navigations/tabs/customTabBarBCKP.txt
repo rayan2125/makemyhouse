@@ -1,0 +1,279 @@
+// CustomTabBar.js
+import React, { useRef } from 'react';
+import { View, TouchableOpacity, Text, Animated } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Colors from '../../utility/color';
+import AutoHeightImage from 'react-native-auto-height-image';
+import Images from '../../utility/images';
+// import { Ionicons } from '@expo/vector-icons';
+
+const CustomTabBar = ({ state, descriptors, navigation }) => {
+  const focusedOptions = descriptors[state.routes[state.index].key].options;
+  const { navigate } = useNavigation();
+  const linePosition = useRef(new Animated.Value(0)).current;
+
+  if (focusedOptions.tabBarVisible === false) {
+    return null;
+  }
+
+  const totalTabs = state.routes.length;
+  const tabWidth = 100; // Adjust as needed
+
+  // const translateX = linePosition.interpolate({
+  //   inputRange: [0, totalTabs - 1],
+  //   outputRange: [0, (totalTabs - 1) * tabWidth],
+  // });
+
+  return (
+    <View style={{ flexDirection: 'row', backgroundColor: '#ECF3FF' }}>
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
+
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            navigate(route.name);
+          }
+        };
+
+        const onLongPress = () => {
+          navigation.emit({
+            type: 'tabLongPress',
+            target: route.key,
+          });
+        };
+        
+        return (   
+            ( options.tabBarIcon == 'Solution'? 
+              <>
+                <View key={route.name} style={{ height:60,flex: 1, alignItems: 'center', justifyContent: 'center',position:'relative' }}>
+                    <TouchableOpacity 
+                        activeOpacity={0.9}
+                        accessibilityRole="button"
+                        accessibilityState={isFocused ? { selected: true } : {}}
+                        accessibilityLabel={options.tabBarAccessibilityLabel}
+                        testID={options.tabBarTestID}
+                        onPress={onPress}
+                        onLongPress={onLongPress}
+                        key={label}
+                        style={{width:70,height:70,position:'absolute',top:-35,borderRadius:60,borderWidth:6,borderColor:'#DEE7F8',backgroundColor:'#ffffff',justifyContent:'center',alignContent:'center',alignItems:'center'}}
+                    >
+                      {
+                        isFocused ? 
+                           <AutoHeightImage
+                              width={45}
+                              source={Images.SolutionPrimary}
+                            />
+                        :
+
+                        <AutoHeightImage
+                          width={45}
+                          source={Images.SolutionSeconday}
+                        />
+                        
+                      }
+                       
+                    </TouchableOpacity>
+                    {/* <View style={{marginTop:31}}>   
+                        <Text style={{ color: isFocused ? Colors.PrimaryColor : Colors.SecondaryColor,}}>
+                          {label}
+                          {options.displayName} 
+                        </Text>
+                    </View> */}
+                </View>
+              </>
+              : 
+              (  
+                options.tabBarIcon == 'home'?
+
+                <TouchableOpacity  
+                  accessibilityRole="button"
+                  accessibilityState={isFocused ? { selected: true } : {}}
+                  accessibilityLabel={options.tabBarAccessibilityLabel}
+                  testID={options.tabBarTestID}
+                  onPress={onPress}
+                  onLongPress={onLongPress}
+                  style={{ height:60,flex: 1, alignItems: 'center', justifyContent: 'center'}}
+                  // key={route.name}
+                  key={label}
+                >
+                  {/* <Ionicons
+                    name={options.tabBarIcon}
+                    size={24}
+                    color={isFocused ? '#007AFF' : '#ccc'}
+                  /> */}
+                  {
+                    isFocused ? 
+                    <AutoHeightImage
+                      width={22}
+                      source={Images.HomeTabPrimary}
+                      style={{marginTop:4}}
+                    />
+                    :
+                    <AutoHeightImage
+                      width={22}
+                      source={Images.HomeTabSeconday}
+                      style={{marginTop:4}}
+                    />
+                  }
+                 
+                  
+                  {/* <Text style={{ color: isFocused ? Colors.PrimaryColor : Colors.SecondaryColor, marginTop:4 }}>
+                    {label}
+                    {options.displayName}
+                  </Text> */}
+                </TouchableOpacity>  
+
+                :
+                
+                (
+                  options.tabBarIcon == 'DesignIdea' ? 
+                    <TouchableOpacity  
+                      accessibilityRole="button"
+                      accessibilityState={isFocused ? { selected: true } : {}}
+                      accessibilityLabel={options.tabBarAccessibilityLabel}
+                      testID={options.tabBarTestID}
+                      onPress={onPress}
+                      onLongPress={onLongPress}
+                      style={{ height:60,flex: 1, alignItems: 'center', justifyContent: 'center'}}
+                      // key={route.name}
+                      key={label}
+                    >
+                      {/* <Ionicons
+                        name={options.tabBarIcon}
+                        size={24}
+                        color={isFocused ? '#007AFF' : '#ccc'}
+                      /> */}
+                      {
+                        isFocused ? 
+                        <AutoHeightImage
+                          width={24}
+                          source={Images.DesignIdeaPrimary}
+                          style={{marginTop:4}}
+                        />
+                        :
+                        <AutoHeightImage
+                          width={24}
+                          source={Images.DesignIdeaSecondary}
+                          style={{marginTop:4}}
+                        />
+                      } 
+                      {/* <Text style={{ color: isFocused ? Colors.PrimaryColor : Colors.SecondaryColor, marginTop:4 }}>
+                        {label}
+                        {options.displayName}
+                      </Text> */}
+                    </TouchableOpacity>  
+                :
+                (
+                  options.tabBarIcon == 'MyProject' ? 
+                    <TouchableOpacity  
+                      accessibilityRole="button"
+                      accessibilityState={isFocused ? { selected: true } : {}}
+                      accessibilityLabel={options.tabBarAccessibilityLabel}
+                      testID={options.tabBarTestID}
+                      onPress={onPress}
+                      onLongPress={onLongPress}
+                      style={{ height:60,flex: 1, alignItems: 'center', justifyContent: 'center'}}
+                      // key={route.name}
+                      key={label}
+                    >
+                      {/* <Ionicons
+                        name={options.tabBarIcon}
+                        size={24}
+                        color={isFocused ? '#007AFF' : '#ccc'}
+                      /> */}
+                      {
+                        isFocused ? 
+                        <AutoHeightImage
+                          width={24}
+                          source={Images.MyProjectPrimary}
+                          style={{marginTop:4}}
+                        />
+                        :
+                        <AutoHeightImage
+                          width={24}
+                          source={Images.MyProjectSecondary}
+                          style={{marginTop:4}}
+                        />
+                      } 
+                      {/* <Text style={{ color: isFocused ? Colors.PrimaryColor : Colors.SecondaryColor, marginTop:4 }}>
+                        {label}
+                        {options.displayName} 
+                      </Text> */}
+                    </TouchableOpacity>  
+                  :
+                  <TouchableOpacity  
+                    accessibilityRole="button"
+                    accessibilityState={isFocused ? { selected: true } : {}}
+                    accessibilityLabel={options.tabBarAccessibilityLabel}
+                    testID={options.tabBarTestID}
+                    onPress={onPress}
+                    onLongPress={onLongPress}
+                    style={{ height:60,flex: 1, alignItems: 'center', justifyContent: 'center'}}
+                    // key={route.name}
+                    key={label}
+                  >
+                    {/* <Ionicons
+                      name={options.tabBarIcon}
+                      size={24}
+                      color={isFocused ? '#007AFF' : '#ccc'}
+                    /> */}
+                    {
+                      isFocused ? 
+                      <AutoHeightImage
+                        width={22}
+                        source={Images.MorePrimary}
+                        style={{marginTop:6}}
+                      />
+                      :
+                      <AutoHeightImage
+                        width={22}
+                        source={Images.MoreSecondary}
+                        style={{marginTop:6}}
+                      />
+                    } 
+                    {/* <Text style={{ color: isFocused ? Colors.PrimaryColor : Colors.SecondaryColor, marginTop:4 }}>
+                      {label}
+                      {options.displayName}
+                    </Text> */}
+                  </TouchableOpacity>   
+                  
+                )
+
+                )
+                  
+                
+              )
+                
+            )
+        )
+      })}
+      {/* <Animated.View
+        style={{
+          position: 'absolute',
+          height: 2,
+          width: tabWidth,
+          backgroundColor: '#007AFF', // Color of the line
+          bottom: 0,
+          transform: [{ translateX }],
+        }}
+      /> */}
+    </View>
+  );
+};
+
+export default CustomTabBar;

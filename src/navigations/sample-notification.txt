@@ -1,0 +1,10 @@
+Notifications types 
+
+
+-- chat 
+{"mediaDetails": null, "notificationType": "chatMessage", "orderCode": "PRJ202408020001", "projectID": ""}
+
+-- rsform  
+
+--contract 
+{"data": {"mediaDetails": null, "notificationType": "contract", "orderCode": "V2O202408260046", "projectID": "PRJ202408240060"}, "fulldata": {"additionalData": {"mediaDetails": null, "notificationType": "contract", "orderCode": "V2O202408260046", "projectID": "PRJ202408240060"}, "androidNotificationId": 433715834, "body": "Hi, You Order V2O202408260046 has been generated successfully. Please click on link to accept the order https://mmh.bz/mjn3j59mUwLG33R87 MakeMyHouse", "fromProjectNumber": "961729071732", "groupedNotifications": null, "launchURL": "https://www.makemyhouse.com/deeplink/contract?id=V2O202408260046", "lockScreenVisibility": 1, "notificationId": "66309ac6-0653-4efd-a263-83050bb31e75", "priority": 0, "rawPayload": "{\"google.delivered_priority\":\"normal\",\"google.sent_time\":1724662502855,\"google.ttl\":2419200,\"google.original_priority\":\"normal\",\"custom\":\"{\\\"i\\\":\\\"66309ac6-0653-4efd-a263-83050bb31e75\\\",\\\"u\\\":\\\"https:\\/\\/www.makemyhouse.com\\/deeplink\\/contract?id=V2O202408260046\\\",\\\"a\\\":{\\\"orderCode\\\":\\\"V2O202408260046\\\",\\\"projectID\\\":\\\"PRJ202408240060\\\",\\\"notificationType\\\":\\\"contract\\\",\\\"mediaDetails\\\":[]}}\",\"google.product_id\":111881503,\"from\":\"961729071732\",\"alert\":\"Hi, You Order V2O202408260046 has been generated successfully. Please click on link to accept the order https:\\/\\/mmh.bz\\/mjn3j59mUwLG33R87 MakeMyHouse\",\"title\":\"Order Contract Agreement\",\"google.message_id\":\"0:1724662502864114%812cbc8cf9fd7ecd\",\"google.c.sender.id\":\"961729071732\",\"androidNotificationId\":433715834}", "templateId": "", "templateName": "", "title": "Order Contract Agreement"}}

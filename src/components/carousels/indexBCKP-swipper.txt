@@ -1,0 +1,69 @@
+import { View, Text, StyleSheet,Dimensions } from 'react-native'
+import React ,{useState,memo} from 'react'
+import Swiper from 'react-native-swiper';
+
+const {width, height} = Dimensions.get('window');
+
+const Banner = () => {
+  // active index 
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  return ( 
+        <Swiper 
+                showsPagination={true}
+                loop={false}
+                autoplay={false}
+                dot={<View style={styles.dot} />}
+                activeDot={<View style={styles.activeDot} />}
+                containerStyle={styles.container}
+                dotStyle={{ marginBottom: -10 }}
+
+                animated={true}
+                bounces={false}
+                automaticallyAdjustContentInsets={true}
+                style={styles.wrapper}
+                loadMinimal={true} loadMinimalLoader={ <Text>Loading....</Text>}
+                onIndexChanged={setActiveIndex}
+        >
+                   
+                <View style={styles.slide}>
+                    <Text >Hello Swiper!</Text>
+                </View>
+                <View style={styles.slide}>
+                    <Text >Beautiful Swiper!</Text>
+                </View>
+                <View style={styles.slide}>
+                    <Text >And simple Swiper!</Text>
+                </View> 
+
+        </Swiper>                    
+    
+  )
+}
+const styles = new StyleSheet.create({
+    wrapper:{ 
+        backgroundColor:'yellow',
+        pointerEvents: "box-none",
+        height:190  
+    },  
+    slide:{
+        width:width / 2,
+        height:150,
+        backgroundColor:'red'
+    },
+    dot:{
+        width:9,
+        height:9,
+        backgroundColor:'red',
+        marginHorizontal:2,
+        borderRadius:12
+    },
+    activeDot:{
+        width:16,
+        height:9,
+        backgroundColor:'green',
+        marginHorizontal:2,
+        borderRadius:12
+    }
+})
+export default Banner

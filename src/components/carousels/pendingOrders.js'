@@ -1,0 +1,126 @@
+import { View, Text, StyleSheet, Dimensions, FlatList } from 'react-native'
+import React,{memo, useState, useRef} from 'react';
+ 
+const { width, height} = Dimensions.get("window");
+
+
+import {actuatedNormalizeVertical} from '../../utility/scaling';
+
+import CTMButton from '../../components/button';
+import Colors from '../../utility/color';
+import Images from '../../utility/images';
+
+import AutoHeightImage from 'react-native-auto-height-image';  //AutoHeightImage component
+import FontSize, { FontWeight } from '../../utility/fonts';
+
+
+const PendingOrdersCarousel = () => {
+
+  // active index 
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const data = [
+    {
+      id: '1',
+      image: 'https://picsum.photos/id/1/5616/3744',
+    },
+    {
+      id: '2',
+      image: 'https://picsum.photos/id/2/5616/3744',
+    }
+  ];
+  
+  const flatListRef = useRef(null);
+ 
+  const [isSignIN,setIsSignIN] = useState(false);
+  const [isLoading,setIsLoading] = useState(false); 
+   
+  // signIN 
+  const CreateAccountHandler = ()=>{
+    console.log("SignINOTP Handler");
+    setIsLoading(true);
+    setIsSignIN(true)
+    setTimeout(()=>{
+      setIsLoading(false);
+      setIsSignIN(false);
+    },1200);
+  } 
+  
+
+  return ( 
+        <FlatList
+        ref={flatListRef}
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (  
+                <View key={item.id} style={styles.slide}> 
+                    <View style={styles.InnerSlide}>
+
+                      <View style={{flexDirection:'row',padding:10, paddingTop:0,justifyContent:'flex-start',alignContent:'center',alignItems:'center'}}>
+                         <AutoHeightImage
+                              width={45}
+                              maxHeight={45}
+                              resizeMode="contain"
+                              source={Images.PendingOrderIcon}
+                          /> 
+                          <Text style={{marginLeft:12,color:Colors.SecondaryColor, fontSize:FontSize.h4, fontWeight:FontWeight.medium}}>Presentation Plan Packages</Text>
+                      </View>
+                      <View style={[styles.whiteSlip]}>
+                          <View style={{width:'70%',paddingHorizontal:10}}>
+                                <Text style={{color:Colors.gray,paddingVertical:6}}>Request ID - 2180432</Text>
+                          </View>
+                          <View style={{width:'30%'}}>
+                                <Text style={{color:Colors.gray,paddingVertical:6}}>1255.00</Text>
+                          </View>
+                      </View>
+                      <View style={[styles.whiteSlip,{backgroundColor:'transparent',marginBottom:16}]}>
+                          <View style={{width:'70%',paddingHorizontal:10}}>
+                                <Text style={{color:Colors.gray,paddingVertical:6}}>Status</Text>
+                                <Text style={{color:Colors.gray,paddingVertical:6}}>Request Incomplete</Text> 
+                          </View>
+                          <View style={{width:'30%'}}>
+                                <Text style={{color:Colors.gray,paddingVertical:6}}>Request Date</Text>
+                                <Text style={{color:Colors.gray,paddingVertical:6}}>05 Feb 2024</Text>
+                          </View>
+                      </View>
+                      <View style={[styles.whiteSlip,{backgroundColor:'transparent',paddingHorizontal:12}]}>
+                          <CTMButton btnText="Continue & Pay Now" functionType="createaccount" onPress={CreateAccountHandler} isLoading={isLoading} /> 
+                      </View>  
+                    </View> 
+                </View>   
+        )}
+        horizontal
+        showsHorizontalScrollIndicator={false}  
+        />
+    
+  )
+}
+
+const styles = new StyleSheet.create({  
+  slide:{
+      width:width/1, 
+      justifyContent:'center',
+      alignContent:'center',
+      alignItems:'center',
+      padding:4, 
+  },
+  InnerSlide:{ 
+    width:'96%',
+    minHeight:160,
+    backgroundColor:'#ECF3FF',
+    borderRadius:12, 
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 3,
+    paddingVertical:12 
+  },
+  whiteSlip:{
+    width:'100%', 
+    backgroundColor:"#ffffff",
+    flexDirection:'row',
+    justifyContent:'flex-start', 
+  }
+})
+export default PendingOrdersCarousel
