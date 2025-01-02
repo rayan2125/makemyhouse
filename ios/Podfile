@@ -11,20 +11,25 @@ linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
   use_frameworks! :linkage => linkage.to_sym
+else
+  use_frameworks! :linkage => :static # Enable static frameworks
 end
+
+# Enable Firebase as a static framework globally
+$RNFirebaseAsStaticFramework = true
 
 target 'Makemyhouse' do
   config = use_native_modules!
 
+  # React Native Pod configuration
   use_react_native!(
     :path => config[:reactNativePath],
-    # An absolute path to your application root.
+    # An absolute path to your application root
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
   # Firebase Pods with modular headers enabled
   pod 'GoogleUtilities', :modular_headers => true
-
 
   target 'MakemyhouseTests' do
     inherit! :complete
